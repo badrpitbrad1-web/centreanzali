@@ -1,3 +1,9 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Allow: /
+
+# Sitemap
+Sitemap: https://anzali-center.vercel.app/sitemap.xml
+
+# Block irrelevant paths
+Disallow: /static/
+Disallow: /*.json$
