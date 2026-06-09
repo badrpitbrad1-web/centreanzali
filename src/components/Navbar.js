@@ -16,7 +16,7 @@ export default function Navbar() {
     <nav style={styles.nav}>
       <div style={styles.container}>
         <Link to="/" style={styles.logo}>
-          <span style={styles.logoGold}>✦</span> مركز الأنزالي
+          <span style={styles.logoGold}>✦</span> مركز الأنزالي للحجامة والطب البديل
         </Link>
 
         {/* Desktop links */}
@@ -93,10 +93,11 @@ const styles = {
   logo: {
     color: '#ffffff',
     textDecoration: 'none',
-    fontSize: '1.25rem',
+    fontSize: 'clamp(0.75rem, 2.5vw, 1.15rem)',
     fontWeight: 'bold',
-    letterSpacing: '0.5px',
-    flexShrink: 0,
+    letterSpacing: '0.3px',
+    flexShrink: 1,
+    lineHeight: 1.3,
   },
   logoGold: {
     color: '#c9a84c',
