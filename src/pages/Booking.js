@@ -9,21 +9,13 @@ const serviceOptions = [
   'جلسات الاسترخاء',
 ];
 
-const timeSlots = ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00'];
+const timeSlots = ['08:00', '09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'];
 
-const initialForm = {
-  name: '',
-  phone: '',
-  service: '',
-  date: '',
-  time: '',
-  notes: '',
-};
+const initialForm = { name: '', phone: '', service: '', date: '', time: '', notes: '' };
 
 export default function Booking() {
   const [form, setForm] = useState(initialForm);
   const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   function handleChange(e) {
@@ -56,20 +48,18 @@ export default function Booking() {
     return (
       <div style={styles.page}>
         <div style={styles.successWrap}>
-          <div style={styles.successCard}>
+          <div className="success-card">
             <div style={styles.successIcon}>✅</div>
             <h2 style={styles.successTitle}>تم تأكيد حجزك!</h2>
             <p style={styles.successText}>
-              شكراً <strong>{form.name}</strong>، تم استلام طلب حجزك لـ <strong>{form.service}</strong>.
+              شكراً <strong>{form.name}</strong>، تم فتح واتساب لإرسال طلب الحجز لـ <strong>{form.service}</strong>.
             </p>
             <div style={styles.summaryBox}>
               <div style={styles.summaryRow}><span>📅 التاريخ:</span> <span>{form.date}</span></div>
               <div style={styles.summaryRow}><span>⏰ الوقت:</span> <span>{form.time}</span></div>
-              <div style={styles.summaryRow}><span>📞 الهاتف:</span> <span>{form.phone}</span></div>
+              <div style={styles.summaryRow}><span>📞 الهاتف:</span> <span style={{ direction: 'ltr' }}>{form.phone}</span></div>
             </div>
-            <p style={styles.confirmNote}>
-              يمكنك أيضاً إرسال تأكيد الحجز مباشرة عبر واتساب:
-            </p>
+            <p style={styles.confirmNote}>لم يفتح واتساب تلقائياً؟</p>
             <a
               href={`https://wa.me/212638038900?text=${encodeURIComponent(
                 `مرحباً، أودّ تأكيد حجز موعد:\n👤 الاسم: ${form.name}\n📞 الهاتف: ${form.phone}\n🩺 الخدمة: ${form.service}\n📅 التاريخ: ${form.date}\n⏰ الوقت: ${form.time}${form.notes ? `\n📝 ملاحظات: ${form.notes}` : ''}`
@@ -92,7 +82,7 @@ export default function Booking() {
   return (
     <div style={styles.page}>
       {/* Header */}
-      <section style={styles.header}>
+      <section style={styles.header} className="page-header">
         <div style={styles.headerInner}>
           <span style={styles.badge}>📅 الحجز</span>
           <h1 style={styles.title}>احجز موعدك</h1>
@@ -100,13 +90,16 @@ export default function Booking() {
         </div>
       </section>
 
-      <section style={styles.section}>
-        <div style={styles.layout}>
+      <section style={styles.section} className="section-pad">
+        {/* Two-column layout — collapses to one on mobile via CSS */}
+        <div className="booking-layout">
+
           {/* Form */}
-          <form style={styles.form} onSubmit={handleSubmit}>
+          <form className="booking-form" onSubmit={handleSubmit}>
             <h2 style={styles.formTitle}>بيانات الحجز</h2>
 
-            <div style={styles.formGrid}>
+            {/* Name + Phone */}
+            <div className="booking-form-grid">
               <div style={styles.field}>
                 <label style={styles.label}>الاسم الكامل *</label>
                 <input
@@ -124,7 +117,7 @@ export default function Booking() {
                   name="phone"
                   value={form.phone}
                   onChange={handleChange}
-                  placeholder="+212 6XX XXX XXX (مثال)"
+                  placeholder="0638038900"
                   style={styles.input}
                   type="tel"
                   required
@@ -132,6 +125,7 @@ export default function Booking() {
               </div>
             </div>
 
+            {/* Service */}
             <div style={styles.field}>
               <label style={styles.label}>الخدمة المطلوبة *</label>
               <select name="service" value={form.service} onChange={handleChange} style={styles.input} required>
@@ -142,7 +136,8 @@ export default function Booking() {
               </select>
             </div>
 
-            <div style={styles.formGrid}>
+            {/* Date + Time */}
+            <div className="booking-form-grid">
               <div style={styles.field}>
                 <label style={styles.label}>التاريخ *</label>
                 <input
@@ -166,6 +161,7 @@ export default function Booking() {
               </div>
             </div>
 
+            {/* Notes */}
             <div style={styles.field}>
               <label style={styles.label}>ملاحظات إضافية</label>
               <textarea
@@ -179,32 +175,46 @@ export default function Booking() {
 
             {error && <p style={styles.error}>{error}</p>}
 
-            <button type="submit" style={styles.submitBtn} disabled={loading}>
-              {loading ? 'جاري الإرسال...' : '✓ تأكيد الحجز'}
+            <button type="submit" style={styles.submitBtn}>
+              💬 تأكيد الحجز عبر واتساب
             </button>
           </form>
 
           {/* Info panel */}
-          <div style={styles.infoPanel}>
+          <div className="booking-info-panel">
             <div style={styles.infoCard}>
               <h3 style={styles.infoTitle}>📍 موقعنا</h3>
-              <a href="https://maps.app.goo.gl/pYBHCQcB2VF9BkZT9?g_st=ac" target="_blank" rel="noreferrer" style={styles.mapLink}>
-                سيدي موسى كم 9<br />مراكش، المغرب 44000<br />
+              <a
+                href="https://maps.app.goo.gl/pYBHCQcB2VF9BkZT9?g_st=ac"
+                target="_blank"
+                rel="noreferrer"
+                style={styles.mapLink}
+              >
+                سيدي موسى كم 9<br />مراكش، المغرب 44000
                 <span style={styles.mapHint}>🗺️ افتح في خرائط Google</span>
               </a>
             </div>
+
             <div style={styles.infoCard}>
               <h3 style={styles.infoTitle}>⏰ أوقات العمل</h3>
               <p style={styles.infoText}>كل أيام الأسبوع<br />08:00 صباحاً — 22:00 مساءً</p>
             </div>
+
             <div style={styles.infoCard}>
               <h3 style={styles.infoTitle}>📞 التواصل</h3>
               <p style={styles.infoText}>
-                <a href="tel:+212638038900" style={{ ...styles.infoLink, direction: 'ltr', display: 'inline-block' }}>+212 638 038 900</a><br />
-                <a href="https://wa.me/212638038900" target="_blank" rel="noreferrer" style={styles.infoLink}>واتساب متاح</a><br />
-                <a href="mailto:centre.anzali@gmail.com" style={styles.infoLink}>centre.anzali@gmail.com</a>
+                <a href="tel:+212638038900" style={{ ...styles.infoLink, direction: 'ltr', display: 'inline-block' }}>
+                  +212 638 038 900
+                </a><br />
+                <a href="https://wa.me/212638038900" target="_blank" rel="noreferrer" style={styles.infoLink}>
+                  واتساب متاح
+                </a><br />
+                <a href="mailto:centre.anzali@gmail.com" style={styles.infoLink}>
+                  centre.anzali@gmail.com
+                </a>
               </p>
             </div>
+
             <div style={styles.infoCard}>
               <h3 style={styles.infoTitle}>💡 قبل زيارتك</h3>
               <ul style={styles.tipsList}>
@@ -222,7 +232,7 @@ export default function Booking() {
 
 const styles = {
   page: {
-    fontFamily: "'Segoe UI', Tahoma, sans-serif",
+    fontFamily: "'Cairo', 'Segoe UI', Tahoma, sans-serif",
     direction: 'rtl',
     color: '#1a1a2e',
   },
@@ -251,20 +261,6 @@ const styles = {
     padding: '60px 24px',
     backgroundColor: '#f9f7f2',
   },
-  layout: {
-    maxWidth: '1100px',
-    margin: '0 auto',
-    display: 'grid',
-    gridTemplateColumns: '1fr 320px',
-    gap: '32px',
-    alignItems: 'start',
-  },
-  form: {
-    backgroundColor: '#ffffff',
-    borderRadius: '16px',
-    padding: '40px',
-    boxShadow: '0 4px 24px rgba(0,0,0,0.07)',
-  },
   formTitle: {
     fontSize: '1.3rem',
     fontWeight: 'bold',
@@ -272,11 +268,7 @@ const styles = {
     paddingBottom: '16px',
     borderBottom: '2px solid #f0e8d8',
     color: '#1a1a2e',
-  },
-  formGrid: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: '20px',
+    marginTop: 0,
   },
   field: { display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '20px' },
   label: { fontSize: '0.9rem', fontWeight: 'bold', color: '#444' },
@@ -302,8 +294,8 @@ const styles = {
     marginBottom: '16px',
   },
   submitBtn: {
-    backgroundColor: '#c9a84c',
-    color: '#1a1a2e',
+    backgroundColor: '#25d366',
+    color: '#ffffff',
     padding: '15px 32px',
     borderRadius: '10px',
     border: 'none',
@@ -314,7 +306,6 @@ const styles = {
     fontFamily: 'inherit',
     marginTop: '8px',
   },
-  infoPanel: { display: 'flex', flexDirection: 'column', gap: '16px' },
   infoCard: {
     backgroundColor: '#ffffff',
     borderRadius: '12px',
@@ -322,7 +313,7 @@ const styles = {
     boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
     borderRight: '3px solid #c9a84c',
   },
-  infoTitle: { fontSize: '1rem', fontWeight: 'bold', marginBottom: '8px', color: '#1a1a2e' },
+  infoTitle: { fontSize: '1rem', fontWeight: 'bold', marginBottom: '8px', color: '#1a1a2e', marginTop: 0 },
   infoText: { color: '#666', fontSize: '0.9rem', lineHeight: 1.7, margin: 0 },
   tipsList: {
     color: '#666',
@@ -330,6 +321,7 @@ const styles = {
     lineHeight: 2,
     paddingRight: '20px',
     margin: 0,
+    listStyle: 'disc',
   },
   successWrap: {
     minHeight: '80vh',
@@ -337,19 +329,10 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#f9f7f2',
-    padding: '40px 24px',
-  },
-  successCard: {
-    backgroundColor: '#ffffff',
-    borderRadius: '20px',
-    padding: '48px',
-    maxWidth: '500px',
-    width: '100%',
-    textAlign: 'center',
-    boxShadow: '0 4px 32px rgba(0,0,0,0.08)',
+    padding: '40px 16px',
   },
   successIcon: { fontSize: '4rem', marginBottom: '16px' },
-  successTitle: { fontSize: '1.8rem', color: '#1a1a2e', marginBottom: '12px' },
+  successTitle: { fontSize: '1.8rem', color: '#1a1a2e', marginBottom: '12px', marginTop: 0 },
   successText: { color: '#555', lineHeight: 1.7, marginBottom: '24px' },
   summaryBox: {
     backgroundColor: '#f9f7f2',
@@ -366,7 +349,7 @@ const styles = {
     fontSize: '0.95rem',
     color: '#444',
   },
-  confirmNote: { color: '#888', fontSize: '0.9rem', marginBottom: '16px' },
+  confirmNote: { color: '#888', fontSize: '0.9rem', marginBottom: '12px' },
   whatsappBtn: {
     display: 'block',
     backgroundColor: '#25d366',
@@ -399,13 +382,13 @@ const styles = {
     color: '#666',
     textDecoration: 'none',
     fontSize: '0.9rem',
-    lineHeight: 1.7,
-    display: 'block',
+    lineHeight: 1.8,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px',
   },
   mapHint: {
     color: '#c9a84c',
     fontSize: '0.8rem',
-    marginTop: '4px',
-    display: 'inline-block',
   },
 };

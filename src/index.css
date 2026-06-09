@@ -1,15 +1,12 @@
+/* ======= Reset ======= */
 *, *::before, *::after {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, 'Arabic UI Text', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: 'Cairo', 'Segoe UI', Tahoma, 'Arabic UI Text', Arial, sans-serif;
   direction: rtl;
   background-color: #ffffff;
   color: #1a1a2e;
@@ -18,15 +15,197 @@ body {
 
 a { color: inherit; }
 button { direction: rtl; }
+ul { list-style: none; margin: 0; padding: 0; }
+
+/* ======= NAVBAR ======= */
+.nav-links-desktop {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.nav-mobile-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background-color: #12122a;
+  padding: 0;
+}
 
 @media (max-width: 768px) {
-  button[aria-label="قائمة"] {
+  .nav-links-desktop {
+    display: none !important;
+  }
+  .nav-hamburger {
     display: flex !important;
   }
 }
 
-@media (min-width: 769px) {
-  button[aria-label="قائمة"] {
-    display: none !important;
+/* ======= BOOKING LAYOUT ======= */
+.booking-layout {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 32px;
+  align-items: start;
+}
+
+.booking-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.booking-form {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+}
+
+.booking-info-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (max-width: 860px) {
+  .booking-layout {
+    grid-template-columns: 1fr !important;
+  }
+  .booking-info-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .booking-form-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .booking-form {
+    padding: 24px 16px !important;
+  }
+  .booking-info-panel {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ======= HOME - Contact strip ======= */
+.contact-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .contact-grid {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* ======= HOME - Hero buttons ======= */
+.hero-btns {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ======= SERVICES grid ======= */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+}
+
+@media (max-width: 480px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ======= FOOTER ======= */
+.footer-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 24px 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: space-between;
+}
+
+@media (max-width: 600px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 24px;
+    padding: 32px 16px 24px;
+  }
+}
+
+/* ======= AI TOOL card ======= */
+.ai-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 48px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+}
+
+@media (max-width: 600px) {
+  .ai-card {
+    padding: 28px 16px;
+    border-radius: 12px;
+  }
+}
+
+/* ======= General section padding on mobile ======= */
+@media (max-width: 600px) {
+  .section-inner {
+    padding: 0 16px;
+  }
+  .page-header {
+    padding: 48px 16px !important;
+  }
+  .section-pad {
+    padding: 48px 16px !important;
+  }
+}
+
+/* ======= Success card on mobile ======= */
+.success-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 48px;
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+}
+
+@media (max-width: 600px) {
+  .success-card {
+    padding: 28px 16px;
+    border-radius: 12px;
   }
 }

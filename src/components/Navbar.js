@@ -20,7 +20,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop links */}
-        <ul style={styles.links}>
+        <ul className="nav-links-desktop">
           {navLinks.map(({ path, label }) => (
             <li key={path}>
               <Link
@@ -38,19 +38,20 @@ export default function Navbar() {
 
         {/* Hamburger */}
         <button
-          style={styles.hamburger}
+          className="nav-hamburger"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="قائمة"
+          aria-expanded={menuOpen}
         >
-          <span style={styles.bar} />
-          <span style={styles.bar} />
-          <span style={styles.bar} />
+          <span style={{ ...styles.bar, transform: menuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none', transition: 'transform 0.2s' }} />
+          <span style={{ ...styles.bar, opacity: menuOpen ? 0 : 1, transition: 'opacity 0.2s' }} />
+          <span style={{ ...styles.bar, transform: menuOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none', transition: 'transform 0.2s' }} />
         </button>
       </div>
 
       {/* Mobile menu */}
       {menuOpen && (
-        <ul style={styles.mobileMenu}>
+        <ul className="nav-mobile-menu">
           {navLinks.map(({ path, label }) => (
             <li key={path}>
               <Link
@@ -78,7 +79,7 @@ const styles = {
     position: 'sticky',
     top: 0,
     zIndex: 1000,
-    fontFamily: "'Segoe UI', Tahoma, sans-serif",
+    fontFamily: "'Cairo', 'Segoe UI', Tahoma, sans-serif",
   },
   container: {
     maxWidth: '1100px',
@@ -92,41 +93,25 @@ const styles = {
   logo: {
     color: '#ffffff',
     textDecoration: 'none',
-    fontSize: '1.3rem',
+    fontSize: '1.25rem',
     fontWeight: 'bold',
     letterSpacing: '0.5px',
+    flexShrink: 0,
   },
   logoGold: {
     color: '#c9a84c',
     marginLeft: '6px',
   },
-  links: {
-    display: 'flex',
-    gap: '32px',
-    listStyle: 'none',
-    margin: 0,
-    padding: 0,
-    '@media (max-width: 768px)': { display: 'none' },
-  },
   link: {
     color: '#cccccc',
     textDecoration: 'none',
     fontSize: '0.95rem',
-    transition: 'color 0.2s',
+    whiteSpace: 'nowrap',
   },
   activeLink: {
     color: '#c9a84c',
     borderBottom: '2px solid #c9a84c',
     paddingBottom: '2px',
-  },
-  hamburger: {
-    display: 'none',
-    flexDirection: 'column',
-    gap: '5px',
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    padding: '4px',
   },
   bar: {
     display: 'block',
@@ -135,24 +120,16 @@ const styles = {
     backgroundColor: '#c9a84c',
     borderRadius: '2px',
   },
-  mobileMenu: {
-    listStyle: 'none',
-    margin: 0,
-    padding: '12px 24px 16px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '12px',
-    backgroundColor: '#12122a',
-  },
   mobileLink: {
     color: '#cccccc',
     textDecoration: 'none',
     fontSize: '1rem',
-    padding: '8px 0',
+    padding: '14px 24px',
     display: 'block',
     borderBottom: '1px solid #2a2a4a',
   },
   activeMobileLink: {
     color: '#c9a84c',
+    backgroundColor: 'rgba(201,168,76,0.08)',
   },
 };
