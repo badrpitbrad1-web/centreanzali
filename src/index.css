@@ -1,13 +1,32 @@
-body {
+*, *::before, *::after {
+  box-sizing: border-box;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, 'Arabic UI Text', Arial, sans-serif;
+  direction: rtl;
+  background-color: #ffffff;
+  color: #1a1a2e;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+button { direction: rtl; }
+
+@media (max-width: 768px) {
+  button[aria-label="قائمة"] {
+    display: flex !important;
+  }
+}
+
+@media (min-width: 769px) {
+  button[aria-label="قائمة"] {
+    display: none !important;
+  }
 }
