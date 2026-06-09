@@ -133,8 +133,9 @@ const styles = {
   },
   header: {
     background: 'linear-gradient(135deg, #1a1a2e, #16213e)',
-    padding: '80px 24px',
+    padding: 'clamp(40px,8vw,80px) 16px',
     textAlign: 'center',
+    width: '100%',
   },
   headerInner: { maxWidth: '700px', margin: '0 auto' },
   badge: {
@@ -157,22 +158,25 @@ const styles = {
     lineHeight: 1.8,
     margin: 0,
   },
-  section: { padding: '80px 0', backgroundColor: '#f9f7f2' },
-  inner: { maxWidth: '1100px', margin: '0 auto', padding: '0 24px' },
+  section: { padding: 'clamp(40px,8vw,80px) 16px', backgroundColor: '#f9f7f2', width: '100%' },
+  inner: { maxWidth: '1100px', margin: '0 auto', width: '100%' },
   grid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-    gap: '28px',
+    display: 'flex',
+    flexWrap: 'wrap',          /* ← flex+wrap بدل grid ثابت */
+    gap: '20px',
+    justifyContent: 'center',
   },
   card: {
     backgroundColor: '#ffffff',
     borderRadius: '16px',
-    padding: '28px',
+    padding: 'clamp(18px,3vw,28px)',
     boxShadow: '0 2px 16px rgba(0,0,0,0.06)',
     border: '1px solid #f0e8d8',
     display: 'flex',
     flexDirection: 'column',
     gap: '20px',
+    flex: '1 1 280px',         /* ← الحد الأدنى 280px */
+    maxWidth: '400px',
   },
   cardTop: { display: 'flex', gap: '16px', alignItems: 'flex-start' },
   icon: { fontSize: '2.5rem', flexShrink: 0, marginTop: '4px' },

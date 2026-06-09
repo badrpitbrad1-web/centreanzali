@@ -42,11 +42,12 @@ const styles = {
   container: {
     maxWidth: '1100px',
     margin: '0 auto',
-    padding: '48px 24px 32px',
+    padding: 'clamp(32px,6vw,48px) 16px clamp(24px,4vw,32px)',
     display: 'flex',
-    flexWrap: 'wrap',
-    gap: '32px',
+    flexWrap: 'wrap',          /* ← الأعمدة تتكدس على الموبايل */
+    gap: '28px',
     justifyContent: 'space-between',
+    width: '100%',
   },
   brand: {
     color: '#ffffff',

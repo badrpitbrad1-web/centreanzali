@@ -256,8 +256,9 @@ const styles = {
   },
   header: {
     background: 'linear-gradient(135deg, #1a1a2e, #16213e)',
-    padding: '80px 24px',
+    padding: 'clamp(40px,8vw,80px) 16px',
     textAlign: 'center',
+    width: '100%',
   },
   headerInner: { maxWidth: '700px', margin: '0 auto' },
   badge: {
@@ -276,17 +277,18 @@ const styles = {
   },
   subtitle: { color: '#aaaaaa', fontSize: '1rem', lineHeight: 1.8, margin: 0 },
   section: {
-    padding: '60px 24px',
+    padding: 'clamp(24px,5vw,60px) 16px',
     backgroundColor: '#f9f7f2',
     minHeight: '400px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'flex-start',
+    width: '100%',
   },
   card: {
     backgroundColor: '#ffffff',
     borderRadius: '20px',
-    padding: '48px',
+    padding: 'clamp(20px,5vw,48px)',
     maxWidth: '600px',
     width: '100%',
     boxShadow: '0 4px 32px rgba(0,0,0,0.08)',
@@ -348,7 +350,7 @@ const styles = {
   aiLoadingText: { color: '#666', textAlign: 'center', margin: 0 },
   aiLabel: { color: '#3a5296', fontWeight: 'bold', marginBottom: '8px' },
   aiText: { color: '#333', lineHeight: 1.8, margin: 0 },
-  resultActions: { display: 'flex', gap: '12px', flexWrap: 'wrap' },
+  resultActions: { display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center' },
   btnPrimary: {
     backgroundColor: '#c9a84c',
     color: '#1a1a2e',

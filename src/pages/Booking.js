@@ -9,7 +9,10 @@ const serviceOptions = [
   'جلسات الاسترخاء',
 ];
 
-const timeSlots = ['08:00', '09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'];
+const timeSlots = [
+  '08:00','09:00','10:00','11:00','12:00',
+  '14:00','15:00','16:00','17:00','18:00','19:00','20:00',
+];
 
 const initialForm = { name: '', phone: '', service: '', date: '', time: '', notes: '' };
 
@@ -29,7 +32,6 @@ export default function Booking() {
       setError('يرجى ملء جميع الحقول المطلوبة.');
       return;
     }
-
     const msg = [
       'مرحباً، أودّ حجز موعد في مركز الأنزالي:',
       `👤 الاسم: ${form.name}`,
@@ -39,38 +41,42 @@ export default function Booking() {
       `⏰ الوقت: ${form.time}`,
       form.notes ? `📝 ملاحظات: ${form.notes}` : '',
     ].filter(Boolean).join('\n');
-
     window.open(`https://wa.me/212638038900?text=${encodeURIComponent(msg)}`, '_blank');
     setSubmitted(true);
   }
 
   if (submitted) {
     return (
-      <div style={styles.page}>
-        <div style={styles.successWrap}>
-          <div className="success-card">
-            <div style={styles.successIcon}>✅</div>
-            <h2 style={styles.successTitle}>تم تأكيد حجزك!</h2>
-            <p style={styles.successText}>
+      <div style={s.page}>
+        <div style={s.successWrap}>
+          <div style={s.successCard}>
+            <div style={{ fontSize: '4rem', marginBottom: '16px' }}>✅</div>
+            <h2 style={{ fontSize: 'clamp(1.4rem,4vw,1.8rem)', color: '#1a1a2e', marginBottom: '12px', marginTop: 0 }}>
+              تم تأكيد حجزك!
+            </h2>
+            <p style={{ color: '#555', lineHeight: 1.7, marginBottom: '24px' }}>
               شكراً <strong>{form.name}</strong>، تم فتح واتساب لإرسال طلب الحجز لـ <strong>{form.service}</strong>.
             </p>
-            <div style={styles.summaryBox}>
-              <div style={styles.summaryRow}><span>📅 التاريخ:</span> <span>{form.date}</span></div>
-              <div style={styles.summaryRow}><span>⏰ الوقت:</span> <span>{form.time}</span></div>
-              <div style={styles.summaryRow}><span>📞 الهاتف:</span> <span style={{ direction: 'ltr' }}>{form.phone}</span></div>
+            <div style={s.summaryBox}>
+              <div style={s.summaryRow}><span>📅 التاريخ:</span><span>{form.date}</span></div>
+              <div style={s.summaryRow}><span>⏰ الوقت:</span><span>{form.time}</span></div>
+              <div style={s.summaryRow}><span>📞 الهاتف:</span><span style={{ direction: 'ltr' }}>{form.phone}</span></div>
             </div>
-            <p style={styles.confirmNote}>لم يفتح واتساب تلقائياً؟</p>
+            <p style={{ color: '#888', fontSize: '0.9rem', marginBottom: '12px' }}>لم يفتح واتساب تلقائياً؟</p>
             <a
               href={`https://wa.me/212638038900?text=${encodeURIComponent(
                 `مرحباً، أودّ تأكيد حجز موعد:\n👤 الاسم: ${form.name}\n📞 الهاتف: ${form.phone}\n🩺 الخدمة: ${form.service}\n📅 التاريخ: ${form.date}\n⏰ الوقت: ${form.time}${form.notes ? `\n📝 ملاحظات: ${form.notes}` : ''}`
               )}`}
               target="_blank"
               rel="noreferrer"
-              style={styles.whatsappBtn}
+              style={s.whatsappBtn}
             >
               💬 إرسال عبر واتساب
             </a>
-            <button onClick={() => { setSubmitted(false); setForm(initialForm); }} style={styles.resetBtn}>
+            <button
+              onClick={() => { setSubmitted(false); setForm(initialForm); }}
+              style={s.resetBtn}
+            >
               حجز موعد آخر
             </button>
           </div>
@@ -80,166 +86,138 @@ export default function Booking() {
   }
 
   return (
-    <div style={styles.page}>
-      {/* Header */}
-      <section style={styles.header} className="page-header">
-        <div style={styles.headerInner}>
-          <span style={styles.badge}>📅 الحجز</span>
-          <h1 style={styles.title}>احجز موعدك</h1>
-          <p style={styles.subtitle}>اختر الخدمة والوقت المناسب لك وسنتواصل معك للتأكيد</p>
+    <div style={s.page}>
+      {/* ── Header ── */}
+      <section style={s.header}>
+        <div style={s.headerInner}>
+          <span style={s.badge}>📅 الحجز</span>
+          <h1 style={s.title}>احجز موعدك</h1>
+          <p style={s.subtitle}>اختر الخدمة والوقت المناسب لك وسنتواصل معك للتأكيد</p>
         </div>
       </section>
 
-      <section style={styles.section} className="section-pad">
-        {/* Two-column layout — collapses to one on mobile via CSS */}
-        <div className="booking-layout">
+      {/* ── Body ── */}
+      <section style={s.section}>
+        {/*
+          layout = flex + wrap
+          على الكمبيوتر: الفورم (flex:1) | المعلومات (300px)
+          على الموبايل: يتكدس تلقائياً لأن flexWrap=wrap
+        */}
+        <div style={s.layout}>
 
-          {/* Form */}
-          <form className="booking-form" onSubmit={handleSubmit}>
-            <h2 style={styles.formTitle}>بيانات الحجز</h2>
+          {/* ── Form ── */}
+          <form style={s.form} onSubmit={handleSubmit}>
+            <h2 style={s.formTitle}>بيانات الحجز</h2>
 
-            {/* Name + Phone */}
-            <div className="booking-form-grid">
-              <div style={styles.field}>
-                <label style={styles.label}>الاسم الكامل *</label>
-                <input
-                  name="name"
-                  value={form.name}
-                  onChange={handleChange}
-                  placeholder="محمد الأمين"
-                  style={styles.input}
-                  required
-                />
+            {/* الاسم + الهاتف */}
+            <div style={s.row}>
+              <div style={{ ...s.field, flex: 1, minWidth: '140px' }}>
+                <label style={s.label}>الاسم الكامل *</label>
+                <input name="name" value={form.name} onChange={handleChange}
+                  placeholder="محمد الأمين" style={s.input} required />
               </div>
-              <div style={styles.field}>
-                <label style={styles.label}>رقم الهاتف *</label>
-                <input
-                  name="phone"
-                  value={form.phone}
-                  onChange={handleChange}
-                  placeholder="0638038900"
-                  style={styles.input}
-                  type="tel"
-                  required
-                />
+              <div style={{ ...s.field, flex: 1, minWidth: '140px' }}>
+                <label style={s.label}>رقم الهاتف *</label>
+                <input name="phone" value={form.phone} onChange={handleChange}
+                  placeholder="0638038900" style={s.input} type="tel" required />
               </div>
             </div>
 
-            {/* Service */}
-            <div style={styles.field}>
-              <label style={styles.label}>الخدمة المطلوبة *</label>
-              <select name="service" value={form.service} onChange={handleChange} style={styles.input} required>
+            {/* الخدمة */}
+            <div style={s.field}>
+              <label style={s.label}>الخدمة المطلوبة *</label>
+              <select name="service" value={form.service} onChange={handleChange} style={s.input} required>
                 <option value="">اختر خدمة...</option>
-                {serviceOptions.map((s) => (
-                  <option key={s} value={s}>{s}</option>
-                ))}
+                {serviceOptions.map((sv) => <option key={sv} value={sv}>{sv}</option>)}
               </select>
             </div>
 
-            {/* Date + Time */}
-            <div className="booking-form-grid">
-              <div style={styles.field}>
-                <label style={styles.label}>التاريخ *</label>
-                <input
-                  name="date"
-                  value={form.date}
-                  onChange={handleChange}
-                  type="date"
-                  style={styles.input}
-                  min={new Date().toISOString().split('T')[0]}
-                  required
-                />
+            {/* التاريخ + الوقت */}
+            <div style={s.row}>
+              <div style={{ ...s.field, flex: 1, minWidth: '140px' }}>
+                <label style={s.label}>التاريخ *</label>
+                <input name="date" value={form.date} onChange={handleChange}
+                  type="date" style={s.input}
+                  min={new Date().toISOString().split('T')[0]} required />
               </div>
-              <div style={styles.field}>
-                <label style={styles.label}>الوقت *</label>
-                <select name="time" value={form.time} onChange={handleChange} style={styles.input} required>
+              <div style={{ ...s.field, flex: 1, minWidth: '140px' }}>
+                <label style={s.label}>الوقت *</label>
+                <select name="time" value={form.time} onChange={handleChange} style={s.input} required>
                   <option value="">اختر وقتاً...</option>
-                  {timeSlots.map((t) => (
-                    <option key={t} value={t}>{t}</option>
-                  ))}
+                  {timeSlots.map((t) => <option key={t} value={t}>{t}</option>)}
                 </select>
               </div>
             </div>
 
-            {/* Notes */}
-            <div style={styles.field}>
-              <label style={styles.label}>ملاحظات إضافية</label>
-              <textarea
-                name="notes"
-                value={form.notes}
-                onChange={handleChange}
+            {/* ملاحظات */}
+            <div style={s.field}>
+              <label style={s.label}>ملاحظات إضافية</label>
+              <textarea name="notes" value={form.notes} onChange={handleChange}
                 placeholder="اذكر أي معلومات صحية مهمة أو استفسارات..."
-                style={{ ...styles.input, minHeight: '100px', resize: 'vertical' }}
-              />
+                style={{ ...s.input, minHeight: '100px', resize: 'vertical' }} />
             </div>
 
-            {error && <p style={styles.error}>{error}</p>}
+            {error && <p style={s.error}>{error}</p>}
 
-            <button type="submit" style={styles.submitBtn}>
+            <button type="submit" style={s.submitBtn}>
               💬 تأكيد الحجز عبر واتساب
             </button>
           </form>
 
-          {/* Info panel */}
-          <div className="booking-info-panel">
-            <div style={styles.infoCard}>
-              <h3 style={styles.infoTitle}>📍 موقعنا</h3>
-              <a
-                href="https://maps.app.goo.gl/pYBHCQcB2VF9BkZT9?g_st=ac"
-                target="_blank"
-                rel="noreferrer"
-                style={styles.mapLink}
-              >
+          {/* ── Info panel ── */}
+          <div style={s.infoPanel}>
+            <div style={s.infoCard}>
+              <h3 style={s.infoTitle}>📍 موقعنا</h3>
+              <a href="https://maps.app.goo.gl/pYBHCQcB2VF9BkZT9?g_st=ac"
+                target="_blank" rel="noreferrer" style={s.mapLink}>
                 سيدي موسى كم 9<br />مراكش، المغرب 44000
-                <span style={styles.mapHint}>🗺️ افتح في خرائط Google</span>
+                <span style={s.mapHint}>🗺️ افتح في خرائط Google</span>
               </a>
             </div>
-
-            <div style={styles.infoCard}>
-              <h3 style={styles.infoTitle}>⏰ أوقات العمل</h3>
-              <p style={styles.infoText}>كل أيام الأسبوع<br />08:00 صباحاً — 22:00 مساءً</p>
+            <div style={s.infoCard}>
+              <h3 style={s.infoTitle}>⏰ أوقات العمل</h3>
+              <p style={s.infoText}>كل أيام الأسبوع<br />08:00 صباحاً — 22:00 مساءً</p>
             </div>
-
-            <div style={styles.infoCard}>
-              <h3 style={styles.infoTitle}>📞 التواصل</h3>
-              <p style={styles.infoText}>
-                <a href="tel:+212638038900" style={{ ...styles.infoLink, direction: 'ltr', display: 'inline-block' }}>
+            <div style={s.infoCard}>
+              <h3 style={s.infoTitle}>📞 التواصل</h3>
+              <p style={s.infoText}>
+                <a href="tel:+212638038900"
+                  style={{ ...s.infoLink, direction: 'ltr', display: 'inline-block' }}>
                   +212 638 038 900
                 </a><br />
-                <a href="https://wa.me/212638038900" target="_blank" rel="noreferrer" style={styles.infoLink}>
-                  واتساب متاح
-                </a><br />
-                <a href="mailto:centre.anzali@gmail.com" style={styles.infoLink}>
-                  centre.anzali@gmail.com
-                </a>
+                <a href="https://wa.me/212638038900" target="_blank" rel="noreferrer" style={s.infoLink}>واتساب متاح</a><br />
+                <a href="mailto:centre.anzali@gmail.com" style={s.infoLink}>centre.anzali@gmail.com</a>
               </p>
             </div>
-
-            <div style={styles.infoCard}>
-              <h3 style={styles.infoTitle}>💡 قبل زيارتك</h3>
-              <ul style={styles.tipsList}>
+            <div style={s.infoCard}>
+              <h3 style={s.infoTitle}>💡 قبل زيارتك</h3>
+              <ul style={{ color: '#666', fontSize: '0.88rem', lineHeight: 2, paddingRight: '20px', margin: 0 }}>
                 <li>تجنب الأكل الثقيل قبل الجلسة</li>
                 <li>ارتدِ ملابس فضفاضة ومريحة</li>
                 <li>أحضر نتائج فحوصاتك إن وجدت</li>
               </ul>
             </div>
           </div>
+
         </div>
       </section>
     </div>
   );
 }
 
-const styles = {
+const s = {
   page: {
     fontFamily: "'Cairo', 'Segoe UI', Tahoma, sans-serif",
     direction: 'rtl',
     color: '#1a1a2e',
+    width: '100%',
+    overflowX: 'hidden',
   },
   header: {
     background: 'linear-gradient(135deg, #1a1a2e, #16213e)',
-    padding: '80px 24px',
+    padding: 'clamp(40px,8vw,80px) 16px',
     textAlign: 'center',
+    width: '100%',
   },
   headerInner: { maxWidth: '700px', margin: '0 auto' },
   badge: {
@@ -252,25 +230,52 @@ const styles = {
   },
   title: {
     color: '#ffffff',
-    fontSize: 'clamp(1.8rem, 4vw, 2.8rem)',
+    fontSize: 'clamp(1.6rem, 5vw, 2.8rem)',
     marginTop: '16px',
     marginBottom: '12px',
   },
-  subtitle: { color: '#aaaaaa', fontSize: '1rem', lineHeight: 1.8, margin: 0 },
+  subtitle: { color: '#aaaaaa', fontSize: 'clamp(0.85rem,2.5vw,1rem)', lineHeight: 1.8, margin: 0 },
   section: {
-    padding: '60px 24px',
+    padding: 'clamp(24px,5vw,60px) 16px',
     backgroundColor: '#f9f7f2',
+    width: '100%',
+  },
+  /* ↓ المفتاح: flex + wrap → عمود واحد على الموبايل تلقائياً */
+  layout: {
+    maxWidth: '1100px',
+    margin: '0 auto',
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '24px',
+    alignItems: 'flex-start',
+    width: '100%',
+  },
+  form: {
+    backgroundColor: '#ffffff',
+    borderRadius: '16px',
+    padding: 'clamp(20px,4vw,40px)',
+    boxShadow: '0 4px 24px rgba(0,0,0,0.07)',
+    flex: '1 1 300px',   /* يتمدد ويتقلص — الحد الأدنى 300px */
+    minWidth: 0,
+    width: '100%',
   },
   formTitle: {
-    fontSize: '1.3rem',
+    fontSize: 'clamp(1.1rem,3vw,1.3rem)',
     fontWeight: 'bold',
-    marginBottom: '28px',
+    marginBottom: '24px',
     paddingBottom: '16px',
     borderBottom: '2px solid #f0e8d8',
     color: '#1a1a2e',
     marginTop: 0,
   },
-  field: { display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '20px' },
+  /* صف من حقلين يتكدس تلقائياً */
+  row: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '16px',
+    marginBottom: '0',
+  },
+  field: { display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '20px', width: '100%' },
   label: { fontSize: '0.9rem', fontWeight: 'bold', color: '#444' },
   input: {
     padding: '12px 14px',
@@ -296,15 +301,24 @@ const styles = {
   submitBtn: {
     backgroundColor: '#25d366',
     color: '#ffffff',
-    padding: '15px 32px',
+    padding: '15px 24px',
     borderRadius: '10px',
     border: 'none',
     fontWeight: 'bold',
-    fontSize: '1.05rem',
+    fontSize: 'clamp(0.95rem,2.5vw,1.05rem)',
     cursor: 'pointer',
     width: '100%',
     fontFamily: 'inherit',
     marginTop: '8px',
+  },
+  /* لوحة المعلومات تنزل تحت الفورم على الموبايل */
+  infoPanel: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px',
+    flex: '0 1 300px',   /* لا تتمدد، الحد الأقصى 300px */
+    minWidth: 0,
+    width: '100%',
   },
   infoCard: {
     backgroundColor: '#ffffff',
@@ -315,14 +329,18 @@ const styles = {
   },
   infoTitle: { fontSize: '1rem', fontWeight: 'bold', marginBottom: '8px', color: '#1a1a2e', marginTop: 0 },
   infoText: { color: '#666', fontSize: '0.9rem', lineHeight: 1.7, margin: 0 },
-  tipsList: {
+  infoLink: { color: '#c9a84c', textDecoration: 'none' },
+  mapLink: {
     color: '#666',
-    fontSize: '0.88rem',
-    lineHeight: 2,
-    paddingRight: '20px',
-    margin: 0,
-    listStyle: 'disc',
+    textDecoration: 'none',
+    fontSize: '0.9rem',
+    lineHeight: 1.8,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px',
   },
+  mapHint: { color: '#c9a84c', fontSize: '0.8rem' },
+  /* صفحة النجاح */
   successWrap: {
     minHeight: '80vh',
     display: 'flex',
@@ -331,13 +349,19 @@ const styles = {
     backgroundColor: '#f9f7f2',
     padding: '40px 16px',
   },
-  successIcon: { fontSize: '4rem', marginBottom: '16px' },
-  successTitle: { fontSize: '1.8rem', color: '#1a1a2e', marginBottom: '12px', marginTop: 0 },
-  successText: { color: '#555', lineHeight: 1.7, marginBottom: '24px' },
+  successCard: {
+    backgroundColor: '#ffffff',
+    borderRadius: '20px',
+    padding: 'clamp(24px,5vw,48px)',
+    maxWidth: '500px',
+    width: '100%',
+    textAlign: 'center',
+    boxShadow: '0 4px 32px rgba(0,0,0,0.08)',
+  },
   summaryBox: {
     backgroundColor: '#f9f7f2',
     borderRadius: '12px',
-    padding: '20px',
+    padding: '16px',
     marginBottom: '20px',
     textAlign: 'right',
   },
@@ -346,15 +370,14 @@ const styles = {
     justifyContent: 'space-between',
     padding: '8px 0',
     borderBottom: '1px solid #eee',
-    fontSize: '0.95rem',
+    fontSize: '0.9rem',
     color: '#444',
   },
-  confirmNote: { color: '#888', fontSize: '0.9rem', marginBottom: '12px' },
   whatsappBtn: {
     display: 'block',
     backgroundColor: '#25d366',
     color: '#ffffff',
-    padding: '13px 28px',
+    padding: '13px 24px',
     borderRadius: '8px',
     textDecoration: 'none',
     fontWeight: 'bold',
@@ -365,7 +388,7 @@ const styles = {
   resetBtn: {
     backgroundColor: 'transparent',
     color: '#666',
-    padding: '12px 28px',
+    padding: '12px 24px',
     borderRadius: '8px',
     border: '2px solid #ddd',
     fontWeight: 'bold',
@@ -373,22 +396,5 @@ const styles = {
     cursor: 'pointer',
     fontFamily: 'inherit',
     width: '100%',
-  },
-  infoLink: {
-    color: '#c9a84c',
-    textDecoration: 'none',
-  },
-  mapLink: {
-    color: '#666',
-    textDecoration: 'none',
-    fontSize: '0.9rem',
-    lineHeight: 1.8,
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '4px',
-  },
-  mapHint: {
-    color: '#c9a84c',
-    fontSize: '0.8rem',
   },
 };
